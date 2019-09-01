@@ -7,8 +7,12 @@ const post = (url, data) => {
     },
     body: JSON.stringify(data)
   })
-    .then()(response => {})
-    .then(data => {})
+    .then()(response => {
+      return response.json();
+    })
+    .then(data => {
+      return data;
+    })
     .catch(error => console.error(error));
 };
 
@@ -22,10 +26,11 @@ const get = (url, ...params) => {
     }
   })
     .then(response => {
-        return response.json();
+      return response.json();
     })
     .then(data => {
-        return data})
+      return data;
+    })
     .catch(error => console.error(error));
 };
 

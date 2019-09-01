@@ -2,6 +2,7 @@ const express = require("express");
 const level = require("level");
 const path = require("path");
 const validator = require("validator");
+const Node = require("./classes/Node.js");
 
 const app = express();
 const port = 3000;
@@ -36,9 +37,8 @@ app.get("/api/node/:name", (req, res) => {
         console.log(err);
         res.send({});
       } else {
-        let data = {};
-        data[req.params.name] = value;
-        res.send(data);
+        console.log(value);
+        res.send(JSON.stringify(value));
       }
     });
   } else {
@@ -50,10 +50,11 @@ app.get("/api/node/:name", (req, res) => {
 app.get("/api/node", (req, res) => {});
 
 app.post("/api/node", (req, res) => {
-  const nodeName = req.body.name;
-  const nodeIp = req.body.ip;
-  if (validator.isAlphanumeric(nodeName) && validator.isIP(nodeIp)) {
-    db.put(nodeName, nodeIp, function(err) {
+  const node = new Node(req.body.name,req.body.ip);
+  console.log(node);
+  console.log(JSON.stringify(node));
+  if (validator.isAlphanumeric(node.name) && validator.isIP(node.ip)) {
+    db.put(node.name, JSON.stringify(node), function(err) {
       sendStandardResponse(err, res);
     });
   } else {
