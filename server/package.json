@@ -16,6 +16,7 @@
     "express": "^4.17.1",
     "level": "^5.0.1",
     "path": "^0.12.7",
+    "read-excel-file": "^4.0.6",
     "validator": "^11.1.0"
   }
 }

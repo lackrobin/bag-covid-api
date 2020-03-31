@@ -1,16 +1,52 @@
 const { download } = require("./download");
+const { handleEpiKurve,handleAltersVerteilung,handleKantone,hanldeHospit,handleTod} = require("./dataHandler");
+
 const express = require("express");
 const level = require("level");
-
+const fs = require('fs');
+const xlsxFile = require('read-excel-file/node');
 //const validator = require("validator");
 //const Node = require("./classes/Node.js");
 
 const url = "https://www.bag.admin.ch/dam/bag/de/dokumente/mt/k-und-i/aktuelle-ausbrueche-pandemien/2019-nCoV/covid-19-datengrundlage-lagebericht.xlsx.download.xlsx/200325_Datengrundlage_Grafiken_COVID-19-Bericht.xlsx";
 const dest = "files/file.xlsx"
 
+//TODO -- Timebased, maybe at 12:00 each day?
 download(url, dest, function(err){
- console.log(err);
+ if (err) {console.log(err)}
+ else {
+       //After succesfully downloading, parse xml, and add to DB
+    fs.readdir("./files/", (err, filenames) => {    
+      if (err) {console.log(err)}
+      filenames.forEach(filename => {
+        if(filename !== ".gitignore"){
+          console.log()
+          xlsxFile(`./files/${filename}`, { getSheets: true }).then((sheets) => {sheets.forEach((obj)=>{
+            switch (obj.name){
+              case "COVID19 Epikurve": 
+              handleEpiKurve(filename,obj.name);
+              break;
+              case "COVID19 Altersverteilung": 
+              handleAltersVerteilung(filename,obj.name);
+              break;
+              case "COVID19 Kantone":
+              handleKantone(filename,obj.name);
+              break;
+              case "COVID19 Altersverteilung Hospit":
+              hanldeHospit(filename,obj.name);
+              break;
+              case "COVID19 Altersverteilung TodF":
+              handleTod(filename,obj.name);
+            }
+        })
+    })
+          
+        }
+      });
+    });
+ }
 });
+
 
 
 const app = express();
@@ -87,5 +123,3 @@ function sendStandardResponse(err, res) {
     res.sendStatus(200);
   }
 }
-
-
