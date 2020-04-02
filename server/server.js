@@ -12,7 +12,11 @@ const fs = require('fs');
 
 const url = "https://www.bag.admin.ch/dam/bag/de/dokumente/mt/k-und-i/aktuelle-ausbrueche-pandemien/2019-nCoV/covid-19-datengrundlage-lagebericht.xlsx.download.xlsx/200325_Datengrundlage_Grafiken_COVID-19-Bericht.xlsx";
 let date = new Date();
-const dest = `files/${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}.xlsx`
+let month = date.getMonth()+1;
+month = month.toString.length = 1 ? "0"+month : ""+month;
+let day = date.getDate();
+day = day.toString.length = 1 ? "0"+day : ""+day;
+const dest = `files/${date.getFullYear()}-${month}-${day}.xlsx`
 
 var db = level("node-db");
 
@@ -27,7 +31,7 @@ download(url, dest, function(err){
       filenames.forEach(filename => {
         if(filename !== ".gitignore"){
           
-          let filenameDate = filename.substr(0,8);
+          let filenameDate = filename.substr(0,10);
           let data ={};
 
           let workbook = xlsx.readFile("files/"+filename);
@@ -54,6 +58,7 @@ download(url, dest, function(err){
             data[sheetName]=sheetData;
           })
           let fileData = new FileData(filenameDate,data);
+          saveToDB(fileData);
         }
     });
     
@@ -91,6 +96,17 @@ app.use(function(req, res, next) {
   );
   
   
+  app.get("/api/data/:date", (req, res) => {
+        db.get(req.params.date, function(err, value) {
+          if (err) {
+            console.log(err);
+            res.send({err});
+          } else {
+            res.setHeader('Content-Type', 'application/json');
+            res.end(value);
+          }
+        });
+    });
   
   // app.get("/api/node/:name", (req, res) => {
   //   if (validator.isAlphanumeric(req.params.name)) {
@@ -127,6 +143,16 @@ app.use(function(req, res, next) {
   
   app.listen(port, () => console.log(`Example app listening on port ${port}!`));
   
+  function saveToDB(data){
+    console.log(data.date);
+    db.put(data.date, JSON.stringify(data), function(err) {
+            if (err) console.log(err);
+            else {
+              
+            }
+        });
+  }
+
   function sendStandardResponse(err, res) {
     if (err) {
       console.log(err);
