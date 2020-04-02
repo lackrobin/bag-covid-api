@@ -1,13 +1,11 @@
-const xlsxFile = require('read-excel-file/node');
-
-function handleEpiKurve(filename, sheetname) {
-    xlsxFile(`files/${filename}`,{ sheet: sheetname }).then((rows) => {
+function handleEpiKurve(rows) {
+    
         let data = [];
         let dataObject = {};
         for (i in rows){
             dataObject = new Object();
             for (j in rows[i]){
-                if(i>3){
+                if(i>=6){
                     if(j==0){
                         dataObject.date=rows[i][j];
                     }
@@ -19,17 +17,16 @@ function handleEpiKurve(filename, sheetname) {
             }        
         }
         console.log(data);
-    }).catch(function(err){console.log(err)})
+
 }
 
-function handleAltersVerteilung(filename, sheetname) {
-    xlsxFile(`files/${filename}`,{ sheet: sheetname }).then((rows) => {
+function handleAltersVerteilung(rows) {
         let data = [];
         let dataObject = {};
         for (i in rows){
             dataObject = new Object();
             for (j in rows[i]){
-                if(i>=5 && i<=13){
+                if(i>=7 && i<=15){
                     switch (j) {
                         case "0":
                         dataObject.age=rows[i][j];
@@ -72,16 +69,14 @@ function handleAltersVerteilung(filename, sheetname) {
             }
         }
         console.log(data);
-    }).catch(function(err){console.log(err)})
 }
-function handleKantone(filename, sheetname) {
-    xlsxFile(`files/${filename}`,{ sheet: sheetname }).then((rows) => {
+function handleKantone(rows) {
         let data = [];
         let dataObject = {};
         for (i in rows){
             dataObject = new Object();
             for (j in rows[i]){
-                if(i>3 && i<31){
+                if(i>=7 && i<=33){
                     switch (j) {
                         case "0":
                         dataObject.canton=rows[i][j];
@@ -98,16 +93,14 @@ function handleKantone(filename, sheetname) {
             }
         }
         console.log(data);
-    }).catch(function(err){console.log(err)})
     }
-    function hanldeHospit(filename, sheetname) {
-        xlsxFile(`files/${filename}`,{ sheet: sheetname }).then((rows) => {
+    function hanldeHospit(rows) {
             let data = [];
             let dataObject = {};
             for (i in rows){
                 dataObject = new Object();
                 for (j in rows[i]){
-                     if(i>4 && i<14){
+                     if(i>=7 && i<=15){
                         switch (j) {
                             case "0":
                             dataObject.age=rows[i][j];
@@ -127,16 +120,14 @@ function handleKantone(filename, sheetname) {
                 }
             }
             console.log(data);
-        }).catch(function(err){console.log(err)})
     }
-    function handleTod(filename, sheetname) {
-        xlsxFile(`files/${filename}`,{ sheet: sheetname }).then((rows) => {
+    function handleTod(rows) {
             let data = [];
             let dataObject = {};
             for (i in rows){
                 dataObject = new Object();
                 for (j in rows[i]){
-                     if(i>4 && i<11){
+                     if(i>=7 && i<=12){
                         switch (j) {
                             case "0":
                             dataObject.age=rows[i][j];
@@ -156,7 +147,6 @@ function handleKantone(filename, sheetname) {
                 }
             }
             console.log(data);
-        }).catch(function(err){console.log(err)})
     }
     
     

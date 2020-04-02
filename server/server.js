@@ -1,10 +1,11 @@
+const { sheet2arr } = require("./sheet2arr");
 const { download } = require("./download");
 const { handleEpiKurve,handleAltersVerteilung,handleKantone,hanldeHospit,handleTod} = require("./dataHandler");
 
 const express = require("express");
+const xlsx = require("xlsx");
 const level = require("level");
 const fs = require('fs');
-const xlsxFile = require('read-excel-file/node');
 //const validator = require("validator");
 //const Node = require("./classes/Node.js");
 
@@ -23,33 +24,32 @@ download(url, dest, function(err){
       if (err) {console.log(err)}
       filenames.forEach(filename => {
         if(filename !== ".gitignore"){
-          xlsxFile(`files/${filename}`, { getSheets: true }).then((sheets) => {sheets.forEach((obj)=>{
-            switch (obj.name){
+          let workbook = xlsx.readFile("files/"+filename);
+          workbook.SheetNames.forEach(sheetName => {
+            let worksheet = workbook.Sheets[sheetName];
+            switch (sheetName){
               case "COVID19 Epikurve": 
-              handleEpiKurve(filename,obj.name);
+              handleEpiKurve(sheet2arr(worksheet));
               break;
               case "COVID19 Altersverteilung": 
-              handleAltersVerteilung(filename,obj.name);
+              handleAltersVerteilung(sheet2arr(worksheet));
               break;
               case "COVID19 Kantone":
-              handleKantone(filename,obj.name);
+              handleKantone(sheet2arr(worksheet));
               break;
               case "COVID19 Altersverteilung Hospit":
-              hanldeHospit(filename,obj.name);
+              hanldeHospit(sheet2arr(worksheet));
               break;
               case "COVID19 Altersverteilung TodF":
-              handleTod(filename,obj.name);
+              handleTod(sheet2arr(worksheet));
             }
           })
-        })
-      }
+        }
     });
     
   });
 }
 });
-
-
 
 const app = express();
 const port = 3000;
