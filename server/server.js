@@ -7,7 +7,13 @@ const  schedule =  require('node-schedule');
 schedule.scheduleJob('0 18 * * *', downloadAndParse); 
 
 const app = express();
-const port = 3000;
+let portSwitch = 3000;
+process.argv.forEach(function (val, index, array) {
+  if(index===2 && val==="prod"){
+    portSwitch = 80;
+  }
+});
+const port = portSwitch;
 
 
 app.use(express.json());
