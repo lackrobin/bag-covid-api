@@ -7,15 +7,16 @@ const express = require("express");
 const xlsx = require("xlsx");
 const level = require("level");
 const fs = require('fs');
-//const validator = require("validator");
-//const Node = require("./classes/Node.js");
 
 const url = "https://www.bag.admin.ch/dam/bag/de/dokumente/mt/k-und-i/aktuelle-ausbrueche-pandemien/2019-nCoV/covid-19-datengrundlage-lagebericht.xlsx.download.xlsx/200325_Datengrundlage_Grafiken_COVID-19-Bericht.xlsx";
+
 let date = new Date();
+
 let month = date.getMonth()+1;
 month = month.toString.length = 1 ? "0"+month : ""+month;
 let day = date.getDate();
 day = day.toString.length = 1 ? "0"+day : ""+day;
+
 const dest = `files/${date.getFullYear()}-${month}-${day}.xlsx`
 
 var db = level("node-db");
@@ -25,7 +26,6 @@ download(url, dest, function(err){
   if (err) {console.log(err)}
 
   else {
-    //After succesfully downloading, parse xml, and add to DB
     fs.readdir("files/", (err, filenames) => {    
       if (err) {console.log(err)}
       filenames.forEach(filename => {
@@ -107,39 +107,7 @@ app.use(function(req, res, next) {
           }
         });
     });
-  
-  // app.get("/api/node/:name", (req, res) => {
-  //   if (validator.isAlphanumeric(req.params.name)) {
-  //     db.get(req.params.name, function(err, value) {
-  //       if (err) {
-  //         console.log(err);
-  //         res.send({});
-  //       } else {
-  //         console.log(value);
-  //         res.send(JSON.stringify(value));
-  //       }
-  //     });
-  //   } else {
-  //     console.log("invalid name");
-  //     res.send({});
-  //   }
-  // });
-  
-  // app.get("/api/node", (req, res) => {});
-  
-  // app.post("/api/node", (req, res) => {
-  //   const node = new Node(req.body.name,req.body.ip);
-  //   console.log(node);
-  //   console.log(JSON.stringify(node));
-  //   if (validator.isAlphanumeric(node.name) && validator.isIP(node.ip)) {
-  //     db.put(node.name, JSON.stringify(node), function(err) {
-  //       sendStandardResponse(err, res);
-  //     });
-  //   } else {
-  //     console.log("invalid parameters");
-  //     res.sendStatus(400);
-  //   }
-  // });
+
   
   app.listen(port, () => console.log(`Example app listening on port ${port}!`));
   
