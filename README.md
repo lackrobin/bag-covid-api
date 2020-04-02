@@ -4,9 +4,12 @@ Access the API here (might change): http://5.102.146.78/api/
 
 Starting the Server:
 
-1. > cd server
-1. > npm install
-1. > node server.js
+```cd server```
+
+```npm install```
+
+```node server.js```
+or ```node server.js prod``` for port 80
 
 ## API Documentation
 
