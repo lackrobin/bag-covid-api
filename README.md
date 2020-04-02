@@ -26,7 +26,7 @@ or ```node server.js prod``` for port 80
                     "endpoint": "{YYYY-MM-DD}",
                     "requestType": "get",
                     "description": "get official data from specific date",
-                    "example": "/data/2020-04-02"
+                    "example": "/api/data/2020-04-02"
                 }
             ]
         }
