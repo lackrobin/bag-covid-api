@@ -16,8 +16,7 @@ function handleEpiKurve(rows) {
                 }
             }        
         }
-        console.log(data);
-
+        return data;    
 }
 
 function handleAltersVerteilung(rows) {
@@ -68,7 +67,7 @@ function handleAltersVerteilung(rows) {
                 }
             }
         }
-        console.log(data);
+        return data;
 }
 function handleKantone(rows) {
         let data = [];
@@ -92,7 +91,7 @@ function handleKantone(rows) {
                 }
             }
         }
-        console.log(data);
+        return data;
     }
     function hanldeHospit(rows) {
             let data = [];
@@ -119,7 +118,7 @@ function handleKantone(rows) {
                     }
                 }
             }
-            console.log(data);
+            return data;
     }
     function handleTod(rows) {
             let data = [];
@@ -146,7 +145,7 @@ function handleKantone(rows) {
                     }
                 }
             }
-            console.log(data);
+            return data;
     }
     
     

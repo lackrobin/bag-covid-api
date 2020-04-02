@@ -1,5 +1,6 @@
 const { sheet2arr } = require("./sheet2arr");
 const { download } = require("./download");
+const  FileData  = require("./classes/FileData");
 const { handleEpiKurve,handleAltersVerteilung,handleKantone,hanldeHospit,handleTod} = require("./dataHandler");
 
 const express = require("express");
@@ -13,6 +14,7 @@ const url = "https://www.bag.admin.ch/dam/bag/de/dokumente/mt/k-und-i/aktuelle-a
 let date = new Date();
 const dest = `files/${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}.xlsx`
 
+var db = level("node-db");
 
 //TODO -- Timebased, maybe at 12:00 each day?
 download(url, dest, function(err){
@@ -24,26 +26,34 @@ download(url, dest, function(err){
       if (err) {console.log(err)}
       filenames.forEach(filename => {
         if(filename !== ".gitignore"){
+          
+          let filenameDate = filename.substr(0,8);
+          let data ={};
+
           let workbook = xlsx.readFile("files/"+filename);
           workbook.SheetNames.forEach(sheetName => {
             let worksheet = workbook.Sheets[sheetName];
+            let sheetData = {};
             switch (sheetName){
               case "COVID19 Epikurve": 
-              handleEpiKurve(sheet2arr(worksheet));
+              sheetData = handleEpiKurve(sheet2arr(worksheet));
               break;
               case "COVID19 Altersverteilung": 
-              handleAltersVerteilung(sheet2arr(worksheet));
+              sheetData = handleAltersVerteilung(sheet2arr(worksheet));
               break;
               case "COVID19 Kantone":
-              handleKantone(sheet2arr(worksheet));
+              sheetData = handleKantone(sheet2arr(worksheet));
               break;
               case "COVID19 Altersverteilung Hospit":
-              hanldeHospit(sheet2arr(worksheet));
+              sheetData = hanldeHospit(sheet2arr(worksheet));
               break;
               case "COVID19 Altersverteilung TodF":
-              handleTod(sheet2arr(worksheet));
+              sheetData = handleTod(sheet2arr(worksheet));
+              break;
             }
+            data[sheetName]=sheetData;
           })
+          let fileData = new FileData(filenameDate,data);
         }
     });
     
@@ -53,7 +63,7 @@ download(url, dest, function(err){
 
 const app = express();
 const port = 3000;
-var db = level("node-db");
+
 
 app.use(express.json());
 
