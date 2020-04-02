@@ -1,6 +1,4 @@
-# JS full stack
-
-Minimal fullstack app with nodejs (express, level)
+# REST API for Switzerlands BAG (Bundesamt für Gesundheit) COVID-19 data
 
 Starting the Server:
 
@@ -8,9 +6,14 @@ Starting the Server:
 1. > npm install
 1. > node server.js
 
-Starting the client:
+## API Documentation
 
-1. > cd public
-1. > npm install
-1. > npm install -g parcel-bundler
-1. > parcel index.html
+### get official data from specific date
+
+Get data bulk from a given date.
+
+```/api/data/:date```
+
+Date format = YYYY-MM-DD
+
+```/api/data/2020-04-02```
