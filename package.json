@@ -1,12 +1,12 @@
 {
   "name": "bag-covid-api",
   "version": "1.0.0",
-  "description": "",
+  "description": "A RESTful API to access the official COVID-19 data parsed from the xlsx files provided by BAG",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "node-env-run server --exec nodemon",
-    "dev": "run-p server start"
+    "dev": "node server.js",
+    "prod" : "node server.js prod"
   },
   "proxy": "http://localhost:3001",
   "keywords": [],
