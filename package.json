@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node server.js",
-    "prod" : "node server.js prod"
+    "prod" : "node server.js prod",
+    "build" : "node server.js prod"
   },
   "proxy": "http://localhost:3001",
   "keywords": [],
