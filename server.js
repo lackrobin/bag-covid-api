@@ -3,7 +3,7 @@ const express = require("express");
 const { db } = require("./util/db");
 const  schedule =  require('node-schedule');
 
-//downloadAndParse();
+downloadAndParse();
 schedule.scheduleJob('0 18 * * *', downloadAndParse); 
 
 const app = express();
