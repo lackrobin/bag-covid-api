@@ -3,7 +3,7 @@ const express = require("express");
 const { db } = require("./util/db");
 const  schedule =  require('node-schedule');
 
-//downloadAndParse();
+downloadAndParse();
 schedule.scheduleJob('0 18 * * *', downloadAndParse); 
 
 const app = express();
@@ -29,6 +29,7 @@ app.use(function(req, res, next) {
   app.get("/api", (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.end(JSON.stringify({
+    repo: "https://github.com/lackrobin/bag-covid-api",
     api: [
       {
         endpoint: "/data",
