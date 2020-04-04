@@ -7,10 +7,9 @@
     "node": "12.x"
   },
   "scripts": {
+    "start": "node server.js prod",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node server.js",
-    "prod" : "node server.js prod",
-    "build" : "node server.js prod"
+    "dev": "node server.js"
   },
   "proxy": "http://localhost:3001",
   "keywords": [],
