@@ -1,6 +1,6 @@
-const { downloadAndParse } = require("./downloadAndParse");
+const { downloadAndParse } = require("./util/downloadAndParse");
 const express = require("express");
-const { db } = require("./db");
+const { db } = require("./util/db");
 const  schedule =  require('node-schedule');
 
 //downloadAndParse();

@@ -1,11 +1,13 @@
-const { db } = require("./db");
+const fs = require('fs');
+const xlsx = require("xlsx");
 
+const { db } = require("./db");
 const { sheet2arr } = require("./sheet2arr");
 const { download } = require("./download");
-const FileData = require("./classes/FileData");
 const { handleEpiKurve, handleAltersVerteilung, handleKantone, hanldeHospit, handleTod } = require("./dataHandler");
-const xlsx = require("xlsx");
-const fs = require('fs');
+
+const FileData = require("../classes/FileData");
+
 function downloadAndParse() {
   const url = "https://www.bag.admin.ch/dam/bag/de/dokumente/mt/k-und-i/aktuelle-ausbrueche-pandemien/2019-nCoV/covid-19-datengrundlage-lagebericht.xlsx.download.xlsx/200325_Datengrundlage_Grafiken_COVID-19-Bericht.xlsx";
   let date = new Date();
