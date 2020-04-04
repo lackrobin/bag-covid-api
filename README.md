@@ -1,6 +1,6 @@
 # REST API for Switzerlands BAG (Bundesamt für Gesundheit) COVID-19 data
 
-Access the API here (might change): http://5.102.146.78/api/
+Access the API here (might change): https://bag-covid-api.herokuapp.com/api/
 
 Starting the Server:
 
