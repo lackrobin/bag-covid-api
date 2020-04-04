@@ -13,7 +13,7 @@ process.argv.forEach(function (val, index, array) {
     portSwitch = 80;
   }
 });
-const port = portSwitch;
+const port = process.env.PORT || portSwitch;
 
 
 app.use(express.json());
