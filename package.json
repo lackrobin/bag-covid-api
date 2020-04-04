@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A RESTful API to access the official COVID-19 data parsed from the xlsx files provided by BAG",
   "main": "server.js",
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node server.js",
