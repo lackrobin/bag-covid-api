@@ -1,6 +1,4 @@
-server/node_modules
-server/node-db
-public/dist
-public/.cache
-public/node_modules
+node_modules
+node-db
+
 .vscode
