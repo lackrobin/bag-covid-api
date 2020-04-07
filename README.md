@@ -2,6 +2,9 @@
 
 Access the API here (might change): https://bag-covid-api.herokuapp.com/api/
 
+Apps using this API (might change): http://bag-covid-visuals.surge.sh/
+
+
 Starting the Server:
 
 ```cd server```
