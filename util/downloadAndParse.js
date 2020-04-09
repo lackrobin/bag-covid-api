@@ -15,7 +15,7 @@ function downloadAndParse() {
   month = month.toString.length = 1 ? "0" + month : "" + month;
   let day = date.getDate();
   day = day.toString.length = 1 ? "0" + day : "" + day;
-  const filename = `${date.getFullYear()}-${month}-${day}.xlsx;`
+  const filename = `${date.getFullYear()}-${month}-${day}.xlsx`;
   const dirname = "files/";
   const dest = `${dirname}${filename}`;
   console.log("starting download...");
