@@ -139,6 +139,11 @@ app.get("/api/infection", (req, res) => {
   getSingleElementFromAllDataSets(res, subsetName, valueName);
 });
 
+app.get("/download", (req, res) => {
+  downloadAndParse();
+  return "[]";
+});
+
 app.listen(port, () => console.log(`BAG COVID API listening on port ${port}!`));
 
 function getSingleElementFromAllDataSets(res, subsetName, valueName) {
@@ -168,4 +173,5 @@ function getSingleElementFromAllDataSets(res, subsetName, valueName) {
 
 copyFilesToFolder("filesarchive/",dirname, function(){parseAllFiles(dirname)});
 parseAllFiles(dirname);
-schedule.scheduleJob('0 18 * * *', downloadAndParse); 
+
+schedule.scheduleJob('0 18 * * *', downloadAndParse);
