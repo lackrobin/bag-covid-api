@@ -126,7 +126,7 @@ function handleKantone(rows) {
             for (i in rows){
                 dataObject = new Object();
                 for (j in rows[i]){
-                     if(i>=7 && i<=12){
+                     if(i>=7 && i<=13){
                         switch (j) {
                             case "0":
                             dataObject.age=rows[i][j];
