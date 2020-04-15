@@ -173,5 +173,5 @@ function getSingleElementFromAllDataSets(res, subsetName, valueName) {
 
 copyFilesToFolder("filesarchive/",dirname, function(){parseAllFiles(dirname)});
 parseAllFiles(dirname);
-
+downloadAndParse();
 schedule.scheduleJob('0 18 * * *', downloadAndParse);
