@@ -123,10 +123,36 @@ function handleKantone(rows) {
     function handleTod(rows) {
             let data = [];
             let dataObject = {};
+
+            let indexSubtractor = 0;
+            dataObject = new Object();
+            dataObject.age = "0 - 9";
+            dataObject.maleDeaths = "0"
+            dataObject.femaleDeaths = "0"
+            dataObject.TotalDeaths = "0"
+            data.push(dataObject);
+            indexSubtractor--;
+
+            dataObject = new Object();
+            dataObject.age = "10 - 19";
+            dataObject.maleDeaths = "0"
+            dataObject.femaleDeaths = "0"
+            dataObject.TotalDeaths = "0"
+            data.push(dataObject);
+            indexSubtractor--;
+
+            dataObject = new Object();
+            dataObject.age = "20 - 29";
+            dataObject.maleDeaths = "0"
+            dataObject.femaleDeaths = "0"
+            dataObject.TotalDeaths = "0"
+            data.push(dataObject);
+            indexSubtractor--;
+
             for (i in rows){
                 dataObject = new Object();
                 for (j in rows[i]){
-                     if(i>=7 && i<=13){
+                     if(i>=7 && i<=15 + indexSubtractor){
                         switch (j) {
                             case "0":
                             dataObject.age=rows[i][j];
@@ -139,12 +165,20 @@ function handleKantone(rows) {
                             break;
                             case "3":
                             dataObject.TotalDeaths=rows[i][j];
-                            data.push(dataObject);
+                            if(dataObject.age === "0 - 9" || dataObject.age === "10 - 19" || dataObject.age === "20 - 29"){
+                                data[data.length-1] = dataObject;
+                                indexSubtractor++;
+                            }
+                            else{
+                                data.push(dataObject);
+                                
+                            }
                             break;
                         }
                     }
                 }
             }
+            console.log(data)
             return data;
     }
     
