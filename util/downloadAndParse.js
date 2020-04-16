@@ -70,7 +70,7 @@ function parseFile(filename) {
       let filenameDate = filename.substr(0, 10);
       let fileDate = new Date(filenameDate);
       let breakingDate = new Date("2020-04-16");
-      if(fileDate.getTime() <= breakingDate.getTime()){
+      if(fileDate.getTime() < breakingDate.getTime()){
 
       let data = {};
       let workbook = xlsx.readFile("files/" + filename);
