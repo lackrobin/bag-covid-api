@@ -68,11 +68,16 @@ function parseFile(filename) {
     if (filename !== ".gitignore") {
       console.log("processing file: " + filename);
       let filenameDate = filename.substr(0, 10);
+      let fileDate = new Date(filenameDate);
+      let breakingDate = new Date("2020-04-16");
+      if(fileDate.getTime() <= breakingDate.getTime()){
+
       let data = {};
       let workbook = xlsx.readFile("files/" + filename);
       workbook.SheetNames.forEach(sheetName => {
         let worksheet = workbook.Sheets[sheetName];
         let sheetData = {};
+
         switch (sheetName) {
           case "COVID19 Epikurve":
             sheetData = handleEpiKurve(sheet2arr(worksheet));
@@ -97,6 +102,7 @@ function parseFile(filename) {
       console.log("saving data from file: " + filename);
       saveToDB(fileData);
     }
+  }
   }
 
 
