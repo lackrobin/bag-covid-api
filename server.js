@@ -152,7 +152,7 @@ function getSingleElementFromAllOldDataSets(res, subsetName, valueName) {
   db.createKeyStream().on('data', function (key) {
     let fileDate = new Date(key);
       let breakingDate = new Date("2020-04-16");
-      if(fileDate.getTime() < breakingDate.getTime() && subsetName !== "COVID19 Altersverteilung"){
+      if(fileDate.getTime() < breakingDate.getTime()){
     db.get(key, function (err, data) {
       dataObject = { date: key };
       if (err) {
