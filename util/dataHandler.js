@@ -1,22 +1,59 @@
 function handleEpiKurve(rows) {
     
-        let data = [];
-        let dataObject = {};
-        for (i in rows){
-            dataObject = new Object();
-            for (j in rows[i]){
-                if(i>=6){
-                    if(j==0){
-                        dataObject.date=rows[i][j];
-                    }
-                    else{
-                        dataObject.cases=rows[i][j];
-                        data.push(dataObject);
-                    }
+    let data = [];
+    let dataObject = {};
+    for (i in rows){
+        dataObject = new Object();
+        for (j in rows[i]){
+            if(i>=6){
+                if(j==0){
+                    dataObject.date=rows[i][j];
                 }
-            }        
-        }
-        return data;    
+                else{
+                    dataObject.cases=rows[i][j];
+                    data.push(dataObject);
+                }
+            }
+        }        
+    }
+    return data;    
+}
+function handleZahlen(rows) {
+    
+    let data = [];
+    let dataObject = {};
+    for (i in rows){
+        dataObject = new Object();
+        for (j in rows[i]){
+            if(i>=7){
+                switch (j) {
+                    case "0":
+                    dataObject.date=rows[i][j];
+                    break;
+                    case "1":
+                    dataObject.dailyCases=rows[i][j];
+                    break;
+                    case "2":
+                    dataObject.casesAddedUp=rows[i][j];
+                    break;
+                    case "3":
+                    dataObject.dailyHospit=rows[i][j];
+                    break;
+                    case "4":
+                    dataObject.hospitAddedUp=rows[i][j];
+                    break;
+                    case "5":
+                    dataObject.dailyDeaths=rows[i][j];
+                    break;
+                    case "6":
+                    dataObject.deathsAddedUp=rows[i][j];
+                    data.push(dataObject);
+                    break;
+            }
+        }        
+    }
+}
+    return data;    
 }
 
 function handleAltersVerteilung(rows) {
@@ -182,7 +219,7 @@ function handleKantone(rows) {
             return data;
     }
     
-    
+    exports.handleZahlen = handleZahlen;
     exports.handleEpiKurve = handleEpiKurve;
     exports.handleAltersVerteilung = handleAltersVerteilung;
     exports.handleKantone = handleKantone;

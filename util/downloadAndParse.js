@@ -4,7 +4,7 @@ const xlsx = require("xlsx");
 const { db } = require("./db");
 const { sheet2arr } = require("./sheet2arr");
 const { download } = require("./download");
-const { handleEpiKurve, handleAltersVerteilung, handleKantone, hanldeHospit, handleTod } = require("./dataHandler");
+const { handleZahlen, handleEpiKurve, handleAltersVerteilung, handleKantone, hanldeHospit, handleTod } = require("./dataHandler");
 
 const FileData = require("../classes/FileData");
 
@@ -70,7 +70,7 @@ function parseFile(filename) {
       let filenameDate = filename.substr(0, 10);
       let fileDate = new Date(filenameDate);
       let breakingDate = new Date("2020-04-16");
-      if(fileDate.getTime() < breakingDate.getTime()){
+      // if(fileDate.getTime() < breakingDate.getTime()){
 
       let data = {};
       let workbook = xlsx.readFile("files/" + filename);
@@ -79,6 +79,10 @@ function parseFile(filename) {
         let sheetData = {};
 
         switch (sheetName) {
+          case "COVID19 Zahlen":
+            console.log("xxxxxxxxxxxxxxxxxxxxxxxxx")
+            sheetData = handleZahlen(sheet2arr(worksheet));
+            break;
           case "COVID19 Epikurve":
             sheetData = handleEpiKurve(sheet2arr(worksheet));
             break;
@@ -101,7 +105,7 @@ function parseFile(filename) {
       console.log("processed file: " + filename);
       console.log("saving data from file: " + filename);
       saveToDB(fileData);
-    }
+    // }
   }
   }
 

@@ -124,19 +124,19 @@ app.get("/api/data/:date", (req, res) => {
 app.get("/api/hospit", (req, res) => {
   const subsetName = "COVID19 Altersverteilung Hospit";
   const valueName = "TotalHospitalized";
-  getSingleElementFromAllDataSets(res, subsetName, valueName);
+  getSingleElementFromAllOldDataSets(res, subsetName, valueName);
 });
 
 app.get("/api/death", (req, res) => {
   const subsetName = "COVID19 Altersverteilung TodF";
   const valueName = "TotalDeaths";
-  getSingleElementFromAllDataSets(res, subsetName, valueName);
+  getSingleElementFromAllOldDataSets(res, subsetName, valueName);
 });
 
 app.get("/api/infection", (req, res) => {
   const subsetName = "COVID19 Altersverteilung";
   const valueName = "totalInfectionCount";
-  getSingleElementFromAllDataSets(res, subsetName, valueName);
+  getSingleElementFromAllOldDataSets(res, subsetName, valueName);
 });
 
 app.get("/download", (req, res) => {
@@ -146,10 +146,13 @@ app.get("/download", (req, res) => {
 
 app.listen(port, () => console.log(`BAG COVID API listening on port ${port}!`));
 
-function getSingleElementFromAllDataSets(res, subsetName, valueName) {
+function getSingleElementFromAllOldDataSets(res, subsetName, valueName) {
   let responseData = [];
   let dataObject = {};
   db.createKeyStream().on('data', function (key) {
+    let fileDate = new Date(key);
+      let breakingDate = new Date("2020-04-16");
+      if(fileDate.getTime() < breakingDate.getTime()){
     db.get(key, function (err, data) {
       dataObject = { date: key };
       if (err) {
@@ -164,7 +167,9 @@ function getSingleElementFromAllDataSets(res, subsetName, valueName) {
         });
         responseData.push(dataObject);
       }
+    
     });
+  }
   }).on('close', function () {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(responseData));
